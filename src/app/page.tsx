@@ -11,9 +11,16 @@ import { ScrollTwistFooter } from "@/components/layout/scroll-twist-footer";
 import { ContactDrawer } from "@/components/layout/contact-drawer";
 import { CommandPalette } from "@/components/command-menu/command-palette";
 
+// New Awwwards Feature Components
+import { MagneticButton } from "@/components/ui/magnetic-button";
+import { KineticText } from "@/components/ui/kinetic-text";
+import { LiquidCanvas } from "@/components/ui/liquid-canvas";
+import { useScrollSkew } from "@/hooks/use-scroll-skew";
+
 import { Hero } from "@/components/hero/hero";
 import { Work } from "@/components/work/work";
 import { Capabilities } from "@/components/capabilities/capabilities";
+import { DancingDog } from "@/components/ui/dancing-dog";
 
 export default function EvereachApp() {
   const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
@@ -21,6 +28,8 @@ export default function EvereachApp() {
   const [estimatorOpen, setEstimatorOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const [time, setTime] = useState("");
+
+  const skewY = useScrollSkew();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -43,7 +52,7 @@ export default function EvereachApp() {
 
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
 
-  // 1. LIQUID SPRING PHYSICS: Low stiffness + smooth damping gives fluid weight/drag
+  // Viscous Fluid Liquid Physics
   const springX = useSpring(mousePos.x, {
     stiffness: 45,
     damping: 18,
@@ -55,7 +64,7 @@ export default function EvereachApp() {
     mass: 1.2,
   });
 
-  // Secondary delayed spring for a dual-stage liquid trail effect
+  // Heavy Trailing Liquid Aura
   const trailX = useSpring(mousePos.x, { stiffness: 20, damping: 25, mass: 2 });
   const trailY = useSpring(mousePos.y, { stiffness: 20, damping: 25, mass: 2 });
 
@@ -88,10 +97,21 @@ export default function EvereachApp() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#05050a] text-white font-mono relative overflow-x-hidden antialiased">
-      {/* 1. ATMOSPHERIC BACKGROUND: EXPANDED LIQUID SPOTLIGHT + GRID */}
+    <div className="min-h-screen bg-[#05050a] text-white font-mono relative overflow-x-hidden antialiased selection:bg-purple-500 selection:text-white">
+      {/* 1. ATMOSPHERIC LIQUID LIGHTING & CANVAS MESH */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#05050a]">
-        {/* Outer Liquid Trail (Larger, slow fluid aura) */}
+        {/* Feature 3: GPU Liquid Mesh Canvas */}
+        <LiquidCanvas />
+
+        {/* Feature 4: Dynamic SVG Film Noise Overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.035] mix-blend-overlay z-50 pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          }}
+        />
+
+        {/* Liquid Aura 1 (Heavy Slow Trail) */}
         <motion.div
           className="hidden md:block absolute w-[110vw] h-[110vw] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none mix-blend-screen"
           style={{
@@ -103,7 +123,7 @@ export default function EvereachApp() {
           }}
         />
 
-        {/* Primary Liquid Spotlight (Expanded radius + silky fluid motion) */}
+        {/* Liquid Aura 2 (Primary Spotlight) */}
         <motion.div
           className="hidden md:block absolute w-[85vw] h-[85vw] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
           style={{
@@ -112,15 +132,6 @@ export default function EvereachApp() {
             background:
               "radial-gradient(circle at center, rgba(168, 85, 247, 0.35) 0%, rgba(99, 102, 241, 0.18) 40%, transparent 70%)",
             filter: "blur(75px)",
-          }}
-        />
-
-        {/* Static Ambient Background Glow */}
-        <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh] opacity-60 md:opacity-40"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 0%, rgba(88, 28, 135, 0.4) 0%, rgba(30, 27, 75, 0.2) 50%, transparent 75%)",
           }}
         />
 
@@ -152,10 +163,23 @@ export default function EvereachApp() {
       <Header time={time} onOpenDrawer={() => setDrawerOpen(true)} />
 
       {/* Glass overlay background spanning top navigation bar */}
-      <div className="fixed top-0 left-0 w-full h-30 z-30 backdrop-blur-md pointer-events-none" />
+      <div className="fixed top-0 left-0 w-full h-[120px] z-30 backdrop-blur-md pointer-events-none" />
 
-      <div className="relative z-20 mix-blend-difference text-white">
-        <Hero />
+      {/* Feature 5: Velocity Scroll Skew applied to main content container */}
+      <motion.div
+        style={{ skewY }}
+        className="relative z-20 mix-blend-difference text-white transform-gpu origin-center"
+      >
+        <Hero onStartProject={() => setDrawerOpen(true)} />
+
+        {/* Kinetic Header Example */}
+        <section className="max-w-6xl mx-auto px-6 pt-20">
+          <KineticText
+            text="FEATURED DIRECTED WORK"
+            className="text-sm font-mono tracking-widest text-purple-400 uppercase"
+          />
+        </section>
+
         <Work onHoverProject={setHoveredProject} />
         <Capabilities />
 
@@ -164,15 +188,15 @@ export default function EvereachApp() {
         <footer className="pb-12 px-6 max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-base opacity-60 gap-4">
           <div>© 2026 EveReach. ALL RIGHTS RESERVED. EU</div>
           <div className="flex gap-6 items-center">
-            <button
-              onClick={() => setDrawerOpen(true)}
-              className="hover:opacity-100 transition-opacity"
-            >
-              CONTACT
-            </button>
+            {/* Feature 1: Magnetic Interactive Contact Button */}
+            <MagneticButton onClick={() => setDrawerOpen(true)}>
+              <span className="hover:opacity-100 transition-opacity cursor-pointer border border-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                CONTACT
+              </span>
+            </MagneticButton>
           </div>
         </footer>
-      </div>
+      </motion.div>
 
       <ContactDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
 
