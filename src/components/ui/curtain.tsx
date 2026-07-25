@@ -31,7 +31,14 @@ export function Curtain() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const curtainWidth = useTransform(smoothScrollProgress, [0, 1], ["2px", "100vw"]);
+  const curtainWidth = useTransform(smoothScrollProgress, [0, 1], ["0px", "100vw"]);
+
+  // Dynamic background color transition from black to white as you scroll
+  const curtainColor = useTransform(
+    smoothScrollProgress,
+    [0, 0.05, 1],
+    ["#080808", "#ffffff", "#ffffff"]
+  );
 
   const curtainLeft = useTransform(
     [springX, smoothScrollProgress],
@@ -51,16 +58,20 @@ export function Curtain() {
   if (!isMounted) {
     return (
       <div
-        style={{ left: "50vw", width: "2px" }}
-        className="fixed top-0 bottom-0 z-10 bg-white pointer-events-none -translate-x-1/2"
+        style={{ left: "50vw", width: "0px", backgroundColor: "#080808" }}
+        className="fixed top-0 bottom-0 z-10 pointer-events-none -translate-x-1/2"
       />
     );
   }
 
   return (
     <motion.div
-      style={{ left: curtainLeft, width: curtainWidth }}
-      className="fixed top-0 bottom-0 z-10 bg-white pointer-events-none -translate-x-1/2 will-change-[width,left]"
+      style={{
+        left: curtainLeft,
+        width: curtainWidth,
+        backgroundColor: curtainColor,
+      }}
+      className="fixed top-0 bottom-0 z-10 pointer-events-none -translate-x-1/2 will-change-[width,left,background-color]"
     />
   );
 }

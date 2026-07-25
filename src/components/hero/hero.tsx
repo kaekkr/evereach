@@ -36,7 +36,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-4xl sm:text-6xl md:text-7xl font-sans font-light tracking-tight leading-[1.08]"
+          className="text-4xl sm:text-6xl md:text-7xl font-normal tracking-tighter leading-[1.08]"
         >
           Digital products, <br />
           interfaces and systems— <br />

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, DM_Sans } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { AnimatedBackground } from "@/components/ui/animated-background";
 
-const inter = DM_Sans({ subsets: ["latin"] });
+const inter = DM_Sans({ weight: "400" });
 
 export const metadata: Metadata = {
   title: "EveReach — Digital Product Studio",
