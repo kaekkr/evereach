@@ -44,7 +44,7 @@ export function Hero() {
         </motion.h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16 border-t border-white/20 text-xs">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16 border-t border-white/20 text-base">
         <div>
           <span className="block opacity-60 mb-1">POSITION</span>
           <p className="font-medium">Independent Studio & Engineering</p>

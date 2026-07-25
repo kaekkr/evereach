@@ -67,13 +67,15 @@ export function CommandPalette({
       icon: Command,
       action: () => {
         onClose();
-        document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+        document
+          .getElementById("about")
+          ?.scrollIntoView({ behavior: "smooth" });
       },
     },
   ];
 
   const filtered = actions.filter((a) =>
-    a.label.toLowerCase().includes(query.toLowerCase())
+    a.label.toLowerCase().includes(query.toLowerCase()),
   );
 
   return (
@@ -102,7 +104,7 @@ export function CommandPalette({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Type a command or search..."
-                className="w-full bg-transparent text-xs text-white placeholder-neutral-500 focus:outline-none"
+                className="w-full bg-transparent text-base text-white placeholder-neutral-500 focus:outline-none"
                 autoFocus
               />
               <span className="text-[10px] text-neutral-600 bg-neutral-900 border border-neutral-800 px-1.5 py-0.5 rounded">
@@ -118,7 +120,7 @@ export function CommandPalette({
                     <button
                       key={item.id}
                       onClick={item.action}
-                      className="w-full flex items-center justify-between p-2.5 rounded-lg text-xs hover:bg-neutral-800/70 text-neutral-300 hover:text-white transition-colors group text-left"
+                      className="w-full flex items-center justify-between p-2.5 rounded-lg text-base hover:bg-neutral-800/70 text-neutral-300 hover:text-white transition-colors group text-left"
                     >
                       <div className="flex items-center gap-2.5">
                         <Icon className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white" />
@@ -129,7 +131,7 @@ export function CommandPalette({
                   );
                 })
               ) : (
-                <div className="p-4 text-center text-xs text-neutral-600">
+                <div className="p-4 text-center text-base text-neutral-600">
                   No matching commands found.
                 </div>
               )}
@@ -138,8 +140,12 @@ export function CommandPalette({
             <div className="mt-2 pt-2 border-t border-neutral-800/60 flex items-center justify-between text-[10px] text-neutral-600 px-2">
               <span>Navigation Shortcut</span>
               <span className="flex items-center gap-1 font-sans">
-                <kbd className="bg-neutral-900 border border-neutral-800 px-1 rounded">⌘</kbd>
-                <kbd className="bg-neutral-900 border border-neutral-800 px-1 rounded">K</kbd>
+                <kbd className="bg-neutral-900 border border-neutral-800 px-1 rounded">
+                  ⌘
+                </kbd>
+                <kbd className="bg-neutral-900 border border-neutral-800 px-1 rounded">
+                  K
+                </kbd>
               </span>
             </div>
           </motion.div>

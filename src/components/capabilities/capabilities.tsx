@@ -10,7 +10,7 @@ export function Capabilities() {
       id="about"
       className="py-24 px-6 max-w-6xl mx-auto border-t border-white/20"
     >
-      <div className="text-xs opacity-60 uppercase tracking-widest mb-12">
+      <div className="text-base opacity-60 uppercase tracking-widest mb-12">
         // SYSTEM CAPABILITIES
       </div>
 
@@ -26,13 +26,11 @@ export function Capabilities() {
             className="border border-white/20 p-6 rounded-xl transition-all group"
           >
             <div className="flex items-center justify-between mb-4">
-              <span className="text-xs opacity-50">0{i + 1}</span>
+              <span className="text-base opacity-50">0{i + 1}</span>
               <Sparkles className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
             </div>
-            <h4 className="text-lg font-sans font-medium mb-2">
-              {cap.title}
-            </h4>
-            <p className="text-xs opacity-70 leading-relaxed font-sans">
+            <h4 className="text-lg font-sans font-medium mb-2">{cap.title}</h4>
+            <p className="text-base opacity-70 leading-relaxed font-sans">
               {cap.desc}
             </p>
           </motion.div>

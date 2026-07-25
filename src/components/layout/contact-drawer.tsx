@@ -30,7 +30,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
           >
             <div>
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-neutral-800">
-                <span className="text-xs uppercase tracking-widest text-neutral-400">
+                <span className="text-base uppercase tracking-widest text-neutral-400">
                   // CONTACT DRAWER
                 </span>
                 <button
@@ -59,7 +59,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                   <input
                     type="text"
                     placeholder="Jane Doe"
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded p-3 text-xs text-white focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-neutral-900 border border-neutral-800 rounded p-3 text-base text-white focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
 
@@ -70,7 +70,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                   <input
                     type="email"
                     placeholder="jane@company.com"
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded p-3 text-xs text-white focus:outline-none focus:border-white transition-colors"
+                    className="w-full bg-neutral-900 border border-neutral-800 rounded p-3 text-base text-white focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
 
@@ -81,7 +81,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                   <textarea
                     rows={4}
                     placeholder="Scope, timeline, and requirements..."
-                    className="w-full bg-neutral-900 border border-neutral-800 rounded p-3 text-xs text-white focus:outline-none focus:border-white resize-none transition-colors"
+                    className="w-full bg-neutral-900 border border-neutral-800 rounded p-3 text-base text-white focus:outline-none focus:border-white resize-none transition-colors"
                   />
                 </div>
 
@@ -89,7 +89,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   type="submit"
-                  className="w-full py-3 bg-white text-black font-medium text-xs rounded hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-white text-black font-medium text-base rounded hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2"
                 >
                   Submit Inquiry <ArrowRight className="w-3.5 h-3.5" />
                 </motion.button>

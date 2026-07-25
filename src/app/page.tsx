@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSpring } from "framer-motion";
+import { motion, useSpring } from "framer-motion";
 
 import { Project } from "@/data/portfolioData";
 import { Curtain } from "@/components/ui/curtain";
@@ -9,7 +9,6 @@ import { FloatingPreview } from "@/components/ui/floating-preview";
 import { Header } from "@/components/layout/header";
 import { ScrollTwistFooter } from "@/components/layout/scroll-twist-footer";
 import { ContactDrawer } from "@/components/layout/contact-drawer";
-import { ProjectEstimator } from "@/components/calculator/project-estimator";
 import { CommandPalette } from "@/components/command-menu/command-palette";
 
 import { Hero } from "@/components/hero/hero";
@@ -73,8 +72,49 @@ export default function EvereachApp() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#080808] text-white font-mono relative overflow-x-hidden antialiased">
+    <div className="min-h-screen bg-[#05050a] text-white font-mono relative overflow-x-hidden antialiased">
+      {/* 1. ATMOSPHERIC BACKGROUND: SPOTLIGHT + ENGINEERING GRID */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#05050a]">
+        {/* Interactive Cursor Spotlight (Disabled on phones via hidden md:block) */}
+        <motion.div
+          className="hidden md:block absolute w-[70vw] h-[70vw] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          style={{
+            x: springX,
+            y: springY,
+            background:
+              "radial-gradient(circle at center, rgba(147, 51, 234, 0.25) 0%, rgba(79, 70, 229, 0.12) 35%, transparent 70%)",
+            filter: "blur(60px)",
+          }}
+        />
+
+        {/* Static Ambient Top Glow (Active on mobile & desktop so phones still have rich color) */}
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh] opacity-60 md:opacity-40"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 0%, rgba(88, 28, 135, 0.4) 0%, rgba(30, 27, 75, 0.2) 50%, transparent 75%)",
+          }}
+        />
+
+        {/* Technical Perspective Grid */}
+        <div
+          className="absolute inset-0 opacity-[0.14]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px)
+            `,
+            backgroundSize: "60px 60px",
+            maskImage:
+              "radial-gradient(ellipse at 50% 30%, black 20%, transparent 80%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse at 50% 30%, black 20%, transparent 80%)",
+          }}
+        />
+      </div>
+
       <Curtain />
+
       <FloatingPreview
         hoveredProject={hoveredProject}
         springX={springX}
@@ -82,8 +122,9 @@ export default function EvereachApp() {
       />
 
       <Header time={time} onOpenDrawer={() => setDrawerOpen(true)} />
-      {/* Glass overlay background spanning full screen height of header */}
-      <div className="fixed top-0 left-0 w-full h-30 z-30 backdrop-blur-md pointer-events-none" />
+
+      {/* Glass overlay background spanning top navigation bar */}
+      <div className="fixed top-0 left-0 w-full h-[72px] z-30 backdrop-blur-md pointer-events-none" />
 
       <div className="relative z-20 mix-blend-difference text-white">
         <Hero />
@@ -92,37 +133,20 @@ export default function EvereachApp() {
 
         <ScrollTwistFooter />
 
-        <footer className="pb-12 px-6 max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs opacity-60 gap-4">
+        <footer className="pb-12 px-6 max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-base opacity-60 gap-4">
           <div>© 2026 EveReach. ALL RIGHTS RESERVED. EU</div>
           <div className="flex gap-6 items-center">
-            {/*<button
-              onClick={() => setEstimatorOpen(true)}
-              className="hover:opacity-100 transition-opacity text-white font-medium"
-            >
-              ESTIMATOR
-            </button>*/}
             <button
               onClick={() => setDrawerOpen(true)}
               className="hover:opacity-100 transition-opacity"
             >
               CONTACT
             </button>
-            {/*<button
-              onClick={() => setCmdOpen(true)}
-              className="hover:opacity-100 transition-opacity border border-white/20 px-2 py-0.5 rounded text-[10px]"
-            >
-              ⌘K
-            </button>*/}
           </div>
         </footer>
       </div>
 
       <ContactDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
-
-      {/*<ProjectEstimator
-        isOpen={estimatorOpen}
-        onClose={() => setEstimatorOpen(false)}
-      />*/}
 
       <CommandPalette
         isOpen={cmdOpen}

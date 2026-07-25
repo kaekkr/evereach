@@ -39,7 +39,7 @@ export function ProjectEstimator({ isOpen, onClose }: ProjectEstimatorProps) {
 
   const toggleMultiple = (id: string) => {
     setSelectedMultiple((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   };
 
@@ -101,7 +101,7 @@ export function ProjectEstimator({ isOpen, onClose }: ProjectEstimatorProps) {
           >
             {/* Header */}
             <div className="p-6 md:p-8 pb-4 border-b border-neutral-800 flex items-center justify-between bg-[#0a0a0a] shrink-0">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-400">
+              <div className="flex items-center gap-2 text-base uppercase tracking-widest text-neutral-400">
                 <Calculator className="w-4 h-4 text-white" />
                 <span>// SCOPE & BUDGET ESTIMATOR</span>
               </div>
@@ -114,13 +114,13 @@ export function ProjectEstimator({ isOpen, onClose }: ProjectEstimatorProps) {
             </div>
 
             {/* Scrollable Body */}
-            <div 
+            <div
               className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 overscroll-contain"
               onWheel={(e) => e.stopPropagation()} // Stop smooth-scroll libraries (e.g. Lenis) from hijacking mousewheel
             >
               {ESTIMATOR_CATEGORIES.map((category) => (
                 <div key={category.id} className="space-y-3">
-                  <h4 className="text-xs text-neutral-500 tracking-wider">
+                  <h4 className="text-base text-neutral-500 tracking-wider">
                     {category.title}
                   </h4>
 
@@ -147,7 +147,7 @@ export function ProjectEstimator({ isOpen, onClose }: ProjectEstimatorProps) {
                         >
                           <div className="space-y-1">
                             <div className="flex items-center gap-2">
-                              <span className="text-xs font-sans font-medium text-white">
+                              <span className="text-base font-sans font-medium text-white">
                                 {opt.label}
                               </span>
                               {opt.basePrice > 0 && (
@@ -168,7 +168,9 @@ export function ProjectEstimator({ isOpen, onClose }: ProjectEstimatorProps) {
                                 : "border-neutral-700"
                             }`}
                           >
-                            {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+                            {isSelected && (
+                              <Check className="w-3 h-3 stroke-[3]" />
+                            )}
                           </div>
                         </div>
                       );
@@ -204,7 +206,7 @@ export function ProjectEstimator({ isOpen, onClose }: ProjectEstimatorProps) {
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 onClick={onClose}
-                className="w-full py-3.5 bg-white text-black font-medium text-xs rounded hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-white text-black font-medium text-base rounded hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2"
               >
                 <span>Request Proposal with this Scope</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -214,6 +216,6 @@ export function ProjectEstimator({ isOpen, onClose }: ProjectEstimatorProps) {
         </div>
       )}
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 }

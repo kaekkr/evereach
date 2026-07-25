@@ -1,7 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useVelocity, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useVelocity,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 
 export function ScrollTwistFooter() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -21,7 +27,7 @@ export function ScrollTwistFooter() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-hidden py-12 my-12 border-t border-white/10 flex items-center justify-center select-none"
+      className="relative w-full overflow-hidden my-12 border-t border-white/10 flex items-center justify-center select-none"
       style={{ perspective: "1200px" }}
     >
       <motion.div

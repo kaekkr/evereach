@@ -22,7 +22,7 @@ export function Work({ onHoverProject }: WorkProps) {
       id="work"
       className="py-20 px-6 max-w-6xl mx-auto border-t border-white/20"
     >
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 text-xs opacity-70">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 text-base opacity-70">
         <span className="uppercase tracking-widest">// SELECTED INDEX</span>
 
         <div className="flex items-center gap-2 border border-white/30 p-1 rounded-full">
@@ -69,7 +69,7 @@ export function Work({ onHoverProject }: WorkProps) {
               className="group py-8 px-2 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:opacity-80 transition-opacity rounded-lg"
             >
               <div className="flex items-baseline gap-6">
-                <span className="text-xs font-mono opacity-60">
+                <span className="text-base font-mono opacity-60">
                   {project.id}
                 </span>
                 <h3 className="text-2xl md:text-3xl font-sans font-normal group-hover:translate-x-3 transition-transform duration-300">
@@ -77,7 +77,7 @@ export function Work({ onHoverProject }: WorkProps) {
                 </h3>
               </div>
 
-              <div className="flex items-center justify-between md:justify-end gap-8 text-xs">
+              <div className="flex items-center justify-between md:justify-end gap-8 text-base">
                 <span className="hidden sm:inline-block max-w-xs opacity-70 font-sans">
                   {project.summary}
                 </span>

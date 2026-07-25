@@ -17,7 +17,7 @@ export function Header({ time, onOpenDrawer }: HeaderProps) {
       transition={{ duration: 0.8 }}
       className="fixed top-0 left-0 w-full z-50 px-6 py-4 mix-blend-difference text-white pointer-events-auto border-b border-white/25"
     >
-      <div className="w-full flex items-center justify-between text-xs">
+      <div className="w-full flex items-center justify-between text-base">
         <a
           href="#"
           onClick={(e) => {
