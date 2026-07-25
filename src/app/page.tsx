@@ -42,8 +42,22 @@ export default function EvereachApp() {
   }, []);
 
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
-  const springX = useSpring(mousePos.x, { stiffness: 200, damping: 20 });
-  const springY = useSpring(mousePos.y, { stiffness: 200, damping: 20 });
+
+  // 1. LIQUID SPRING PHYSICS: Low stiffness + smooth damping gives fluid weight/drag
+  const springX = useSpring(mousePos.x, {
+    stiffness: 45,
+    damping: 18,
+    mass: 1.2,
+  });
+  const springY = useSpring(mousePos.y, {
+    stiffness: 45,
+    damping: 18,
+    mass: 1.2,
+  });
+
+  // Secondary delayed spring for a dual-stage liquid trail effect
+  const trailX = useSpring(mousePos.x, { stiffness: 20, damping: 25, mass: 2 });
+  const trailY = useSpring(mousePos.y, { stiffness: 20, damping: 25, mass: 2 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -56,7 +70,9 @@ export default function EvereachApp() {
   useEffect(() => {
     springX.set(mousePos.x);
     springY.set(mousePos.y);
-  }, [mousePos, springX, springY]);
+    trailX.set(mousePos.x);
+    trailY.set(mousePos.y);
+  }, [mousePos, springX, springY, trailX, trailY]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -73,21 +89,33 @@ export default function EvereachApp() {
 
   return (
     <div className="min-h-screen bg-[#05050a] text-white font-mono relative overflow-x-hidden antialiased">
-      {/* 1. ATMOSPHERIC BACKGROUND: SPOTLIGHT + ENGINEERING GRID */}
+      {/* 1. ATMOSPHERIC BACKGROUND: EXPANDED LIQUID SPOTLIGHT + GRID */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-[#05050a]">
-        {/* Interactive Cursor Spotlight (Disabled on phones via hidden md:block) */}
+        {/* Outer Liquid Trail (Larger, slow fluid aura) */}
         <motion.div
-          className="hidden md:block absolute w-[70vw] h-[70vw] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          className="hidden md:block absolute w-[110vw] h-[110vw] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none mix-blend-screen"
+          style={{
+            x: trailX,
+            y: trailY,
+            background:
+              "radial-gradient(circle at center, rgba(126, 34, 206, 0.28) 0%, rgba(67, 56, 202, 0.12) 45%, transparent 75%)",
+            filter: "blur(100px)",
+          }}
+        />
+
+        {/* Primary Liquid Spotlight (Expanded radius + silky fluid motion) */}
+        <motion.div
+          className="hidden md:block absolute w-[85vw] h-[85vw] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"
           style={{
             x: springX,
             y: springY,
             background:
-              "radial-gradient(circle at center, rgba(147, 51, 234, 0.25) 0%, rgba(79, 70, 229, 0.12) 35%, transparent 70%)",
-            filter: "blur(60px)",
+              "radial-gradient(circle at center, rgba(168, 85, 247, 0.35) 0%, rgba(99, 102, 241, 0.18) 40%, transparent 70%)",
+            filter: "blur(75px)",
           }}
         />
 
-        {/* Static Ambient Top Glow (Active on mobile & desktop so phones still have rich color) */}
+        {/* Static Ambient Background Glow */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-[120vw] h-[60vh] opacity-60 md:opacity-40"
           style={{
@@ -113,7 +141,7 @@ export default function EvereachApp() {
         />
       </div>
 
-      <Curtain />
+      {/*<Curtain />*/}
 
       <FloatingPreview
         hoveredProject={hoveredProject}
@@ -124,7 +152,7 @@ export default function EvereachApp() {
       <Header time={time} onOpenDrawer={() => setDrawerOpen(true)} />
 
       {/* Glass overlay background spanning top navigation bar */}
-      <div className="fixed top-0 left-0 w-full h-[72px] z-30 backdrop-blur-md pointer-events-none" />
+      <div className="fixed top-0 left-0 w-full h-30 z-30 backdrop-blur-md pointer-events-none" />
 
       <div className="relative z-20 mix-blend-difference text-white">
         <Hero />
