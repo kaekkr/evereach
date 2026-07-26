@@ -88,8 +88,9 @@ export function Hero({
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-4xl sm:text-6xl md:text-7xl font-normal tracking-tighter leading-[1.12]"
         >
-          Digital products
           {/* --- 3 INLINE STACKED LINKED IMAGES --- */}
+          <span className="mix-blend-difference">Digital products</span>
+
           <span className="inline-flex items-center gap-1.5 sm:gap-2 mx-2 align-middle -translate-y-1">
             {previews.slice(0, 3).map((item, index) => {
               const isExternal = item.href.startsWith("http");
@@ -128,9 +129,12 @@ export function Hero({
             })}
           </span>
           <br />
-          interfaces and systems <br />
-          shaped from first idea <br />
-          to working form
+        
+          <span className="mix-blend-difference">
+            interfaces and systems <br />
+            shaped from first idea <br />
+            to working form
+          </span>
           {/* --- PERFECTLY CIRCULAR MORPHING BUTTON --- */}
           <span className="inline-flex items-center align-middle ml-3 sm:ml-5 relative">
             <motion.button
