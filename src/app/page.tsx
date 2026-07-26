@@ -168,8 +168,9 @@ export default function EvereachApp() {
       {/* Feature 5: Velocity Scroll Skew applied to main content container */}
       <motion.div
         style={{ skewY }}
-        className="relative z-20 mix-blend-difference text-white transform-gpu origin-center"
+        className="relative z-20 text-white transform-gpu origin-center"
       >
+
         <Hero onStartProject={() => setDrawerOpen(true)} />
 
         {/* Kinetic Header Example */}
