@@ -39,15 +39,15 @@ export function Header({ time, onOpenDrawer }: HeaderProps) {
           </div>
         </a>{" "}
         {/* NAV LINKS */}
-        <div className="hidden md:flex items-center gap-8 opacity-80">
-          <a href="#work" className="hover:opacity-100 transition-opacity">
+        <div className="hidden md:flex items-center gap-8 opacity-80 hover:cursor-pointer">
+          <a href="#work" className="hover:opacity-100 transition-opacity cursor-pointer">
             <ScrambleText text="WORK" />
           </a>
-          <a href="#about" className="hover:opacity-100 transition-opacity">
+          <a href="#about" className="hover:opacity-100 transition-opacity cursor-pointer">
             <ScrambleText text="CAPABILITIES" />
           </a>
-          <span className="opacity-40">|</span>
-          <span className="font-mono">{time || "12:00:00 UTC"}</span>
+          <span className="opacity-40 cursor-pointer">|</span>
+          <span className="font-mono cursor-pointer">{time || "12:00:00 UTC"}</span>
         </div>
         {/* CTA BUTTON */}
         <motion.button
