@@ -204,7 +204,7 @@ export function ContactDrawer({ isOpen, onClose }: ContactDrawerProps) {
                   )}
                   {status === "success" && (
                     <p className="text-[11px] text-green-400">
-                      Заявка отправлена — свяжемся в ближайшее время.
+                      Your request has been sent — we will be in touch shortly.                   
                     </p>
                   )}
                 </div>
