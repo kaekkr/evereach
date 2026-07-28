@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
 
 export function LiquidCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -8,18 +8,28 @@ export function LiquidCanvas() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let width = 0;
+    let height = 0;
 
     const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      width = window.innerWidth;
+      height = window.innerHeight;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.scale(dpr, dpr);
     };
+
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     let step = 0;
@@ -27,7 +37,6 @@ export function LiquidCanvas() {
       step += 0.01;
       ctx.clearRect(0, 0, width, height);
 
-      // Organic fluid wave paths
       ctx.fillStyle = "rgba(147, 51, 234, 0.03)";
       ctx.beginPath();
       ctx.moveTo(0, height * 0.5);

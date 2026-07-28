@@ -2,81 +2,137 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-// Примитивный rate limit в памяти: 3 заявки с IP за 10 минут.
-// Для одного инстанса хватает; на serverless сбрасывается при холодном старте.
-const hits = new Map<string, number[]>();
 const WINDOW = 10 * 60 * 1000;
 const LIMIT = 3;
 
-function rateLimited(ip: string) {
+const hits = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
   const now = Date.now();
-  const prev = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW);
-  if (prev.length >= LIMIT) return true;
-  hits.set(ip, [...prev, now]);
+  const timestamps = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW);
+
+  if (timestamps.length >= LIMIT) {
+    return true;
+  }
+
+  if (timestamps.length === 0) {
+    hits.delete(ip);
+  } else {
+    hits.set(ip, [...timestamps, now]);
+  }
+
   return false;
 }
 
-const esc = (s: string) =>
-  s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]!));
+const escapeHtml = (str: string): string =>
+  str.replace(/[&<>"']/g, (char) => {
+    const map: Record<string, string> = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return map[char] || char;
+  });
 
 export async function POST(req: Request) {
   try {
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+
+    if (!botToken || !chatId) {
+      console.error("Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID");
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 }
+      );
+    }
+
     const ip =
       req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-    if (rateLimited(ip)) {
+
+    if (isRateLimited(ip)) {
       return NextResponse.json(
-        { error: "Слишком много заявок. Попробуйте позже." },
+        { error: "Too many requests. Please try again later." },
         { status: 429 }
       );
     }
 
-    const { name, email, details, website } = await req.json();
+    const body = await req.json();
+    const { name, email, details, website } = body;
 
-    // honeypot — боты заполняют скрытое поле, отвечаем «успехом» и молчим
-    if (website) return NextResponse.json({ ok: true });
+    if (website) {
+      return NextResponse.json({ ok: true });
+    }
 
     if (!name?.trim() || !email?.trim() || !details?.trim()) {
-      return NextResponse.json({ error: "Заполните все поля" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Please fill out all required fields" },
+        { status: 400 }
+      );
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: "Некорректный email" }, { status: 400 });
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 }
+      );
     }
+
     if (details.length > 4000) {
-      return NextResponse.json({ error: "Слишком длинное сообщение" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Message is too long (4000 char max)" },
+        { status: 400 }
+      );
     }
+
+    const timestamp = new Date().toLocaleString("en-US", {
+      timeZone: "Europe/Prague",
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
 
     const text =
-      `🟣 <b>Новая заявка с сайта</b>\n\n` +
-      `<b>Имя:</b> ${esc(name)}\n` +
-      `<b>Email:</b> <code>${esc(email)}</code>\n\n` +
-      `<b>Детали:</b>\n${esc(details)}\n\n` +
-      `<i>${new Date().toLocaleString("ru-RU", { timeZone: "Europe/Prague" })}</i>`;
+      `🟣 <b>New Project Inquiry</b>\n\n` +
+      `<b>Name:</b> ${escapeHtml(name.trim())}\n` +
+      `<b>Email:</b> <code>${escapeHtml(email.trim())}</code>\n\n` +
+      `<b>Details:</b>\n${escapeHtml(details.trim())}\n\n` +
+      `<i>${timestamp} (Europe/Prague)</i>`;
 
-   const res = await fetch(
-  `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`,
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: process.env.TELEGRAM_CHAT_ID,
-      ...(process.env.TELEGRAM_THREAD_ID && {
-        message_thread_id: Number(process.env.TELEGRAM_THREAD_ID),
-      }),
+    const telegramPayload: Record<string, unknown> = {
+      chat_id: chatId,
       text,
       parse_mode: "HTML",
       disable_web_page_preview: true,
-    }),
-  }
-);
+    };
+
+    if (process.env.TELEGRAM_THREAD_ID) {
+      telegramPayload.message_thread_id = Number(process.env.TELEGRAM_THREAD_ID);
+    }
+
+    const res = await fetch(
+      `https://api.telegram.org/bot${botToken}/sendMessage`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(telegramPayload),
+      }
+    );
 
     if (!res.ok) {
-      console.error("Telegram error:", await res.text());
-      return NextResponse.json({ error: "Не удалось отправить" }, { status: 502 });
+      const errorText = await res.text();
+      console.error("Telegram API Error:", errorText);
+      return NextResponse.json(
+        { error: "Failed to dispatch notification" },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    console.error("Contact API Route Error:", err);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
