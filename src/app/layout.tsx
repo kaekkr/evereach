@@ -8,6 +8,9 @@ const dm_sans = DM_Sans({ weight: "400" });
 export const metadata: Metadata = {
   title: "EveReach — Digital Product Studio",
   description: "Crafting modern software, web platforms, and AI systems.",
+  icons: {
+    icon: "/Icon_Black.svg"
+  }
 };
 
 export default function RootLayout({
