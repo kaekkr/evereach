@@ -15,35 +15,33 @@ export interface Capability {
 export const PROJECTS: Project[] = [
   {
     id: "01",
-    title: "Aura Health",
-    category: "Product",
-    year: "2026",
-    summary: "Precision wellness dashboard built for high-throughput tracking & telemetry.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
+    title: "I-Know",
+    category: "Education",
+    year: "2025",
+    summary:
+      "Digital Pre-School Assistant — a unified platform connecting educators, parents, and administrators around the child.",
+    image:
+      "/I_Know_Digital_Assistant.png"
   },
   {
     id: "02",
-    title: "KuDAGI",
-    category: "AI",
-    year: "2026",
-    summary: "Enterprise vector search engine & automated document indexing agent.",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
+    title: "Spalena 53",
+    category: "Marketplace",
+    year: "2025",
+    summary:
+      "A platform for discovering and acquiring books, antiquarian items, and rare collectibles.",
+    image:
+      "/spalena.png"
   },
   {
     id: "03",
-    title: "OmniCRM",
-    category: "SaaS",
+    title: "Kudagi",
+    category: "E-commerce",
     year: "2025",
-    summary: "Sales analytics platform with customizable pipeline micro-interactions.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: "04",
-    title: "Vortex Pay",
-    category: "Fintech",
-    year: "2025",
-    summary: "Zero-friction payment flow with real-time currency conversion routing.",
-    image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=800&auto=format&fit=crop",
+    summary:
+      "Mobile-first clothing ordering app built with React Native (PWA-ready), including a full admin panel for inventory and order management.",
+    image:
+      "/kudagi.png"
   },
 ];
 
@@ -61,5 +59,3 @@ export const CAPABILITIES: Capability[] = [
     desc: "Next.js App Router, TypeScript, smooth scroll engines, and low-latency APIs.",
   },
 ];
-
-export const CATEGORIES = ["ALL", "Product", "AI", "SaaS", "Fintech"];

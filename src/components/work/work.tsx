@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import { PROJECTS, Project } from "@/data/portfolioData";
 import { FloatingPreview } from "@/components/ui/floating-preview";
 import { useMousePhysics } from "@/hooks/use-mouse-physics";
 import { ProjectRow } from "./project-row";
+import { ProjectModal } from "./project-modal"; // ← new
 
 export function Work() {
   const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const { springX, springY } = useMousePhysics();
 
   return (
@@ -32,9 +35,19 @@ export function Work() {
             project={project}
             index={i}
             onHover={setHoveredProject}
+            onSelect={setSelectedProject} // ← new
           />
         ))}
       </div>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
