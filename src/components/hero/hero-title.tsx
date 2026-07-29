@@ -39,7 +39,7 @@ export function HeroTitle({ onStartProject }: HeroTitleProps) {
   if (isMobile === null) {
     return (
       <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] border border-white/30 px-3 py-1 rounded-full text-neutral-300">
+        <div className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] border border-white/30 px-3 py-1 rounded-full text-neutral-300 max-w-full">
           <CornerDownRight className="w-3 h-3 opacity-60 shrink-0" />
           <span className="truncate">
             Product Thinking • Visual Direction • Technical Execution
@@ -59,7 +59,7 @@ export function HeroTitle({ onStartProject }: HeroTitleProps) {
         initial={isMobile ? false : { opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] border border-white/30 px-3 py-1 rounded-full text-neutral-300"
+        className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] border border-white/30 px-3 py-1 rounded-full text-neutral-300 max-w-full"
       >
         <CornerDownRight className="w-3 h-3 opacity-60 shrink-0" />
         <span className="truncate">
