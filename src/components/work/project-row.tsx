@@ -1,4 +1,5 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Project } from "@/data/portfolioData";
@@ -7,10 +8,16 @@ import { useEffect, useState } from "react";
 interface ProjectRowProps {
   project: Project;
   onHover: (project: Project | null) => void;
+  onSelect: (project: Project) => void; // ← new
   index?: number;
 }
 
-export function ProjectRow({ project, onHover, index = 0 }: ProjectRowProps) {
+export function ProjectRow({
+  project,
+  onHover,
+  onSelect,
+  index = 0,
+}: ProjectRowProps) {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -45,16 +52,16 @@ export function ProjectRow({ project, onHover, index = 0 }: ProjectRowProps) {
     </>
   );
 
+  const sharedProps = {
+    onMouseEnter: () => onHover(project),
+    onMouseLeave: () => onHover(null),
+    onClick: () => onSelect(project),
+    className:
+      "group py-8 px-2 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:opacity-80 transition-opacity rounded-lg w-full",
+  };
+
   if (isMobile === null || isMobile) {
-    return (
-      <div
-        onMouseEnter={() => onHover(project)}
-        onMouseLeave={() => onHover(null)}
-        className="group py-8 px-2 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:opacity-80 transition-opacity rounded-lg w-full"
-      >
-        {content}
-      </div>
-    );
+    return <div {...sharedProps}>{content}</div>;
   }
 
   return (
@@ -63,9 +70,7 @@ export function ProjectRow({ project, onHover, index = 0 }: ProjectRowProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      onMouseEnter={() => onHover(project)}
-      onMouseLeave={() => onHover(null)}
-      className="group py-8 px-2 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:opacity-80 transition-opacity rounded-lg w-full"
+      {...sharedProps}
     >
       {content}
     </motion.div>
