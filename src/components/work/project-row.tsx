@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 interface ProjectRowProps {
   project: Project;
   onHover: (project: Project | null) => void;
-  onSelect: (project: Project) => void; // ← new
+  onSelect: (project: Project) => void;
   index?: number;
 }
 
@@ -60,7 +60,7 @@ export function ProjectRow({
       "group py-8 px-2 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer hover:opacity-80 transition-opacity rounded-lg w-full",
   };
 
-  if (isMobile === null || isMobile) {
+  if (isMobile) {
     return <div {...sharedProps}>{content}</div>;
   }
 
