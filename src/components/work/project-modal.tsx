@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ArrowUpRight } from "lucide-react";
 import { Project } from "@/data/portfolioData";
 import Image from "next/image";
 
@@ -47,10 +47,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
       >
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 z-20 p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+          className="absolute top-5 right-5 z-20 flex items-center justify-center w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md border border-white/20 transition-colors"
           aria-label="Close"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5 text-white" />
         </button>
 
         <div className="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-t-2xl">
@@ -78,15 +78,21 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             {project.title}
           </h2>
 
-          <p className="text-base md:text-lg opacity-75 leading-relaxed max-w-2xl">
+          <p className="text-base md:text-lg opacity-75 leading-relaxed max-w-2xl mb-8">
             {project.summary}
-            {/* You can later add project.description for longer text */}
           </p>
 
-          {/* Optional future actions */}
-          {/* <div className="mt-8 flex gap-4">
-            <button className="...">View Prototype</button>
-          </div> */}
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 hover:bg-white hover:text-black transition-colors text-sm font-medium"
+            >
+              View full version
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          )}
         </div>
       </motion.div>
     </div>

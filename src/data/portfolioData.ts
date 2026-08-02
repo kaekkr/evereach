@@ -5,6 +5,7 @@ export interface Project {
   year: string;
   summary: string;
   image: string;
+  link?: string;
 }
 
 export interface Capability {
@@ -21,7 +22,8 @@ export const PROJECTS: Project[] = [
     summary:
       "Digital Pre-School Assistant — a unified platform connecting educators, parents, and administrators around the child.",
     image:
-      "/I_Know_Digital_Assistant.png"
+      "/I_Know_Digital_Assistant.png",
+    link: "https://www.behance.net/gallery/237908041/I-Know-SaaS-Landing-Page-Design"
   },
   {
     id: "02",
@@ -31,7 +33,8 @@ export const PROJECTS: Project[] = [
     summary:
       "A platform for discovering and acquiring books, antiquarian items, and rare collectibles.",
     image:
-      "/spalena.png"
+      "/spalena.png",
+    link: "https://www.behance.net/gallery/240460149/Spalena-53-E-commerce-UXUI-Redesign"
   },
   {
     id: "03",
@@ -41,7 +44,8 @@ export const PROJECTS: Project[] = [
     summary:
       "Mobile-first clothing ordering app built with React Native (PWA-ready), including a full admin panel for inventory and order management.",
     image:
-      "/kudagi.png"
+      "/kudagi.png",
+    link: ""
   },
 ];
 
