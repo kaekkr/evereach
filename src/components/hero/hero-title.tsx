@@ -30,7 +30,7 @@ export function HeroTitle({ onStartProject }: HeroTitleProps) {
         shaped from first idea <br className="hidden sm:inline" />
         to working form
       </span>{" "}
-      <span className="hidden sm:inline-block align-middle my-1">
+      <span className="hidden sm:inline-block my-1">
         <MorphingCtaButton onClick={onStartProject} />
       </span>
     </>

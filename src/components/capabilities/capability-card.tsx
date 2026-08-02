@@ -52,7 +52,6 @@ export function CapabilityCard({ capability, index }: CapabilityCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
       viewport={{ once: true }}
-      whileHover={{ y: -8 }}
       className="border border-white/20 p-6 rounded-xl transition-all group bg-white/[0.02] backdrop-blur-sm"
     >
       {content}

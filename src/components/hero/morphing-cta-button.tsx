@@ -25,7 +25,7 @@ export function MorphingCtaButton({
   };
 
   return (
-    <span className="inline-flex items-center align-middle ml-3 sm:ml-5 relative">
+    <span className="inline-flex items-center align-middle relative">
       <motion.button
         onClick={handleClick}
         onMouseEnter={() => setIsHovered(true)}
