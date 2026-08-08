@@ -14,11 +14,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/beauty",
-        destination: "https://nails-studio-eight.vercel.app",
+        destination: "https://nails-studio-eight.vercel.app/beauty",
       },
       {
         source: "/beauty/:path*",
-        destination: "https://nails-studio-eight.vercel.app/:path*",
+        destination: "https://nails-studio-eight.vercel.app/beauty/:path*",
       },
     ];
   },
