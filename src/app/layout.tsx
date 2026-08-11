@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "EveReach — Digital Product Studio",
   description: "Crafting modern software, web platforms, and AI systems.",
   icons: {
-    icon: "/Icon_Black.svg"
+    icon: "/Medium_Icon.svg?v=2"
   }
 };
 

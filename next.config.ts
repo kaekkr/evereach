@@ -1,24 +1,23 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+const BEAUTY_ORIGIN = isDev
+  ? "http://localhost:3001"
+  : "https://nails-studio-eight.vercel.app";
+
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-    ],
+    remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
   },
   async rewrites() {
     return [
       {
         source: "/beauty",
-        destination: "https://nails-studio-eight.vercel.app/beauty",
+        destination: `${BEAUTY_ORIGIN}/beauty`,
       },
       {
         source: "/beauty/:path*",
-        destination: "https://nails-studio-eight.vercel.app/beauty/:path*",
+        destination: `${BEAUTY_ORIGIN}/beauty/:path*`,
       },
     ];
   },
